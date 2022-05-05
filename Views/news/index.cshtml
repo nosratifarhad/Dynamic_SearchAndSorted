@@ -1,0 +1,32 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";}
+
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-ui/ui-bootstrap-custom-tpls-3.0.5.min.js"></script>
+
+<script src="~/Scripts/Application/Tools/Tools.js"></script>
+<script src="~/Scripts/Application/Tools/APIService.js"></script>
+<script src="~/Scripts/Application/Tools/UIProgressTool.js"></script>
+<script src="~/Scripts/Application/Common/Common.js"></script>
+
+<script src="~/Scripts/Application/Domain/New/newAPIService.js"></script>
+<script src="~/Scripts/Application/Domain/New/newApp.js"></script>
+
+<div ng-app="newApp" ng-controller="newController as $ctrl" ng-cloak>
+    <div class="news-list__page">
+        <div class="container">
+            <div class="news-list">
+                <div ng-repeat="new in PagedListInfo.datalist">
+                </div>
+            </div>
+            <div class="news-list__pageinate">
+                <nav aria-label="Page navigation example">
+                    <div>
+                        <ul class="pagination-sm" uib-pagination total-items="PagedListInfo.totalCount"
+                            ng-model="PagedListInfo.pageIndex" ng-click="pageChanged(PagedListInfo.pageIndex)" max-size="maxSize" data-boundary-links="true"></ul>
+                        <p>تعداد صفحهات : {{ PagedListInfo.pageIndex }} از : {{ PagedListInfo.totalPages }}</p>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

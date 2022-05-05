@@ -1,0 +1,273 @@
+﻿@{ViewBag.Title = "NewsContent"; Layout = "~/Views/Shared/_Layout.cshtml";}
+<style type="text/css">
+    .newsCommentForm .ng-invalid {
+        border: 1px solid red;
+    }
+    /*.submitted input.ng-invalid.ng-touched {
+        border: 1px solid #b71e1e;
+    }
+    .submitted textarea.ng-invalid.ng-touched {
+        border: 1px solid #b71e1e;
+    }
+    .submitted input.ng-valid.ng-touched {
+        background-color: #e8f0fe;
+    }*/
+</style>
+<link href="~/Scripts/loading-bar/loading-bar.css" rel="stylesheet" />
+
+<script src="~/Scripts/angular.min.js"></script>
+
+<script src="~/Scripts/bower-angular-translate-2.18.1/angular-translate.js"></script>
+<script src="~/Scripts/bower-angular-translate-2.18.1/angular-cookies.min.js"></script>
+<script src="~/Scripts/bower-angular-translate-2.18.1/angular-translate-storage-cookie.min.js"></script>
+
+<script src="~/Scripts/angular-touch.min.js"></script>
+<script src="~/Scripts/angular-animate.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Scripts/angular-ui/ui-bootstrap-custom-tpls-3.0.5.min.js"></script>
+
+<script src="~/Scripts/moment-jalaali/moment.js"></script>
+<script src="~/Scripts/moment-jalaali/moment-jalaali.js"></script>
+
+<script src="~/Scripts/ui-grid.core.min.js"></script>
+<script src="~/Scripts/Application/Tools/Tools.js"></script>
+<script src="~/Scripts/Application/Tools/GridTools.js"></script>
+<script src="~/Scripts/Application/Tools/APIService.js"></script>
+<script src="~/Scripts/Application/Tools/UIProgressTool.js"></script>
+<script src="~/Scripts/Application/Tools/DialogTools.js"></script>
+<script src="~/Scripts/Application/Tools/EntityDialogTools.js"></script>
+<script src="~/Scripts/Application/Tools/ModalDialogHeader.js"></script>
+<script src="~/Scripts/Application/Tools/ModalDialogFooter.js"></script>
+<script src="~/Scripts/Application/Common/Common.js"></script>
+
+
+<script src="~/Scripts/Application/Common/AppBaseModule/AppBaseModule.js"></script>
+<script src="~/Scripts/Application/Domain/NewsSelectedGroup/newsSelectedGroupAPIService.js"></script>
+<script src="~/Scripts/Application/Domain/NewsGroup/newsGroupAPIService.js"></script>
+<script src="~/Scripts/Application/Domain/Project/ProjectAPIService.js"></script>
+<script src="~/Scripts/Application/Domain/Home/homeAPIService.js"></script>
+<script src="~/Scripts/Application/Domain/New/newAPIService.js"></script>
+<script src="~/Scripts/Application/Domain/New/NewsContent/newsContentApp.js"></script>
+
+<div ng-app="newsContentApp" ng-controller="newsContentController as $ctrl" ng-init="PageParams.initPageParams({id : @Html.Raw(ViewBag.id)})" ng-cloak>
+    <title>{{NewsContentdataview.title}}</title>
+    <div class="news-det__page">
+        @Html.Action("Header", "General", new { area = "" })
+        <div class="news-det">
+
+            <div class="row news-det__img">
+                <img ng-src="~/Gallerys/NewsGallery/{{NewsContentdataview.fileName}}" alt="{{NewsContentdataview.title}}" />
+            </div>
+            <div class="newsDetImg">
+                <div class="row news-det__title">
+                    <h2 class="news-li__title">{{NewsContentdataview.title}}</h2>
+                </div>
+                <div class="newsContTop">
+                    <div class="newsDate">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        <span>{{NewsContentdataview.createDate| jalaliDate: "jYYYY/jMM/jDD" }}</span><!--چرا اول یه تاریخ دیرو نمایش میده بعد تاریخ اصلی رو ؟؟؟؟-->
+                    </div>
+
+                    <div class="newsCateg" ng-repeat="nsg in NewsSelectedGroup" ng-show="nsg.newsID == NewsContentdataview.newsID">
+                        <i class="fa fa-folder-open" aria-hidden="true"></i>
+                        <a href="#" ng-repeat="ng in NewsGroup" ng-if="nsg.groupID == ng.groupID">{{ng.groupName}}</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="newsBreadCrump">
+            <div class="container">
+                <div class="col-12">
+                    <div class="newsBreadCrumps">
+                        <ul>
+                            <li class="breadLi"><a href="/">صفحه اصلی</a></li>
+                            <li class="breadLi"><a href="#">اخبار و مقالات</a></li>
+                            <li class="breadLi"><a href="/news">خبرها</a></li>
+                            <li class="breadLi active"><a href="#">{{NewsContentdataview.title}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="news-details">
+            <div class="container flex-cont">
+                <div class="col-12 newsDetPg">
+                    <div class="col-md-9 col-12 newsContent">
+                        <div class="theiaStickySidebar">
+                            <div class="newsContents">
+                                <div class="newsCont">
+                                    <h3 class="news-li__title text-dark" ng-bind-html="NewsContentdataview.shortDescription|trustAsHtml"></h3>
+                                    <br />
+                                    <p ng-bind-html="NewsContentdataview.text|trustAsHtml"></p>
+                                </div>
+                                <div class="newsTags">
+                                    <div class="tagLabel">
+                                        <i class="fa fa-tags" aria-hidden="true"></i>
+                                        <span>برچسب ها : </span>
+                                    </div>
+                                    <div class="tagList">
+                                        <ul>
+                                            <li ng-repeat="tg in NewsTag"><a href="/news/search?q={{tg.tag}}">{{tg.tag}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="newsShare">
+                                    <div class="col-sm-10 col-12 shareDiv">
+                                        <div class="shareLabel">
+                                            <i class="fa fa-share-alt-square" aria-hidden="true"></i>
+                                            <span>اشتراک گذاری در شبکه های اجتماعی : </span>
+                                        </div>
+                                        <div class="shareList">
+                                            <ul>
+                                                <li class="newsShareLi newsShare-fb"><a class="facebook" blog-list="" href="/{{NewsContentdataview.socialMedia1}}"><i class="fa fa-facebook"></i></a> </li>
+                                                <li class="newsShareLi newsShare-tw"><a class="twitter" href="/{{NewsContentdataview.socialMedia2}}"><i class="fa fa-twitter"></i></a> </li>
+                                                <li class="newsShareLi newsShare-teleg"><a class="telegram" href="/{{NewsContentdataview.socialMedia3}}"><i class="fa fa-paper-plane"></i></a> </li>
+                                                <li class="newsShareLi newsShare-linked"><a class="linkedIn" href="/{{NewsContentdataview.socialMedia4}}"><i class="fa fa-linkedin-square"></i></a></li>
+                                                <li class="newsShareLi newsShare-whats"><a class="whatsapp" href="/{{NewsContentdataview.socialMedia5}}"><i class="fa fa-whatsapp"></i></a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-12 shareDiv">
+                                        <div class="newsView">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <Span>{{NewsContentdataview.seen}}</Span>
+                                        </div>
+                                        <div class="newsLike">
+                                            <i class="fa fa-heart" ng-click="Like()" aria-hidden="true"></i>
+                                            <Span>{{likes}}</Span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="newsRealated">
+                                <div class="newsRealatedLabel">
+                                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    <span>مطالب مرتبط : </span>
+                                </div>
+                                <ul>
+
+                                    <li ng-repeat="ti in FilterTitleNewsdataview" class="realNews col-12 col-sm-4">
+                                        <a href="/news/newscontent{{UrlNewsContent.titleurl}}{{ti.title}}{{UrlNewsContent.idurl}}{{ti.newsID}}">
+                                            <img ng-src="~/Gallerys/NewsGallery/{{ti.fileName}}" />
+                                            <div class="realNewsDet">
+                                                <h3>{{ti.title}}</h3>
+                                                <em>{{ti.createDate| jalaliDate: "jYYYY/jMM/jDD" }}</em>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                            <div ng-if="NewsContentdataview.isShowComment">
+                                <div class="newsComment">
+                                    <div class="newsRealatedLabel">
+                                        <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                        <span>نظر شما : </span>
+                                    </div>
+                                    <form ng-class="{'newsCommentForm': submitted}" id="newsCommentForm" name="newsCommentForm" ng-submit="newsCommentForm.$valid && SubmitCommentForm(CommentDataFormEntity)" novalidate>
+
+                                        <div class="newsCommentForm">
+                                            <div class="form-group col-12 col-md-6">
+                                                <input class="form-item" type="text" name="{{CommentDataFormEntity.columnDefs.name.field}}" id="{{CommentDataFormEntity.name}}" ng-model="CommentDataFormEntity.name" value="" required placeholder="نام و نام خانوادگی">
+                                            </div>
+                                            <div class="form-group col-12 col-md-6">
+                                                <input class="form-item" type="email" name="{{CommentDataFormEntity.columnDefs.email.field}}" id="{{CommentDataFormEntity.email}}" ng-model="CommentDataFormEntity.email" value="" required placeholder="ایمیل">
+                                                <span ng-show="newsCommentForm.email.$invalid && !newsCommentForm.email.$pristine" class="help-block text-danger">ایمیل وارد شده صحیح نمی باشد</span>
+                                          
+                                            </div>
+                                            <div class="form-group col-12 col-md-6" hidden>
+                                                <input class="form-item" type="text" name="{{CommentDataFormEntity.columnDefs.webSite.field}}" id="{{CommentDataFormEntity.webSite}}" ng-model="CommentDataFormEntity.webSite" value="" placeholder="وبسایت">
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <textarea rows="3" class="form-item" name="{{CommentDataFormEntity.columnDefs.comment.field}}" id="{{CommentDataFormEntity.comment}}" ng-model="CommentDataFormEntity.comment" value="" required placeholder="پیام"></textarea>
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <button type="submit"  ng-click="submitted= true;" class="subBtn">ثبت</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="newsComments">
+                                    <div class="newsRealatedLabel">
+                                        <i class="fa fa-comments-o" aria-hidden="true"></i>
+                                        <span>نظرات دیگران : </span>
+                                    </div>
+                                    <ul>
+
+                                        <li class="newsCmLi" ng-repeat="Comment in NewsComment">
+                                            <div class="col-2 cmLiPic">
+                                                <img src="~/Content/img/avatar.png" />
+                                            </div>
+                                            <div class="col-10 cmLiTxt">
+                                                <h3>{{Comment.name}}</h3>
+                                                <em>{{Comment.createDate| jalaliDate: "jYYYY/jMM/jDD" }}</em>
+                                                <p>{{Comment.comment}}</p>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 newsSideBar">
+                        <div class="theiaStickySidebar">
+                            <div class="newsSideBars">
+                                <div class="sideBarDiv last-news">
+                                    <h3>
+                                        <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>آخرین اخبار
+                                    </h3>
+                                    <ul>
+                                        <li class="sideNews" ng-repeat="news in Newsdataview">
+                                            <a href="/news/newscontent{{UrlNewsContent.titleurl}}{{news.url}}{{UrlNewsContent.idurl}}{{news.newsID}}">
+                                                <div class="slideNewsImg"><img ng-src="~/Gallerys/NewsGallery/Thumb/{{news.fileName}}"></div>
+                                                <div class="slideNewsDet">
+                                                    <h4>{{news.title}}</h4>
+                                                    <em>{{news.createDate| jalaliDate: "jYYYY/jMM/jDD" }}</em>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                                <div class="sideBarDiv last-proj">
+                                    <h3><i class="fa fa-chevron-circle-left" aria-hidden="true"></i> آخرین پروژه های حمایتی</h3>
+                                    <ul>
+
+                                        <li class="sideProjLi" ng-repeat="pro in Projectdataview">
+                                            <img ng-src="~/Gallerys/ProjectGallery/{{pro.fileName}}" />
+                                            <h3 class="sideProjLiTitle">{{pro.title}}</h3>
+                                            <div class="sideProjDetFront">
+                                                <div class="col-6 our-supp">
+                                                    <h4>حامیان : <span>{{pro.numberOfDonors}} نفر</span></h4>
+                                                </div>
+                                                <div class="col-6 remain-day">
+                                                    <h4><span>{{diffDate(pro.endDate, pro.startDate) }} روز</span> باقی مانده </h4>
+                                                </div>
+                                            </div>
+                                            <div class="sideProjDetBack">
+                                                <div class="col-6 see-detail">
+                                                    <a href="/project/projectcontent{{UrlProjectContent.titleurl}}{{pro.url}}{{UrlProjectContent.idurl}}{{pro.projectID}}">مشاهده جزئیات</a>
+                                                </div>
+                                                <div class="col-6 support-us">
+                                                    <a class="subBtn" href="/project/projectpay{{UrlProjectPay.titleurl}}{{pro.title}}{{UrlProjectPay.idurl}}{{pro.projectID}}">حمایت می کنم</a>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Action("Footer", "General", new { area = "" })
+    </div>
+</div>

@@ -1,0 +1,88 @@
+﻿@{ViewBag.Title = "Search";Layout = "~/Views/Shared/_Layout.cshtml";}
+<link href="~/Scripts/loading-bar/loading-bar.css" rel="stylesheet" />
+
+<script src="~/Scripts/angular.min.js"></script>
+
+<script src="~/Scripts/bower-angular-translate-2.18.1/angular-translate.js"></script>
+<script src="~/Scripts/bower-angular-translate-2.18.1/angular-cookies.min.js"></script>
+<script src="~/Scripts/bower-angular-translate-2.18.1/angular-translate-storage-cookie.min.js"></script>
+
+<script src="~/Scripts/angular-touch.min.js"></script>
+<script src="~/Scripts/angular-animate.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Scripts/angular-ui/ui-bootstrap-custom-tpls-3.0.5.min.js"></script>
+
+<script src="~/Scripts/moment-jalaali/moment.js"></script>
+<script src="~/Scripts/moment-jalaali/moment-jalaali.js"></script>
+
+<script src="~/Scripts/ui-grid.core.min.js"></script>
+<script src="~/Scripts/Application/Tools/Tools.js"></script>
+<script src="~/Scripts/Application/Tools/GridTools.js"></script>
+<script src="~/Scripts/Application/Tools/APIService.js"></script>
+<script src="~/Scripts/Application/Tools/UIProgressTool.js"></script>
+<script src="~/Scripts/Application/Tools/DialogTools.js"></script>
+<script src="~/Scripts/Application/Tools/EntityDialogTools.js"></script>
+<script src="~/Scripts/Application/Tools/ModalDialogHeader.js"></script>
+<script src="~/Scripts/Application/Tools/ModalDialogFooter.js"></script>
+<script src="~/Scripts/Application/Common/Common.js"></script>
+
+
+<script src="~/Scripts/Application/Common/AppBaseModule/AppBaseModule.js"></script>
+<script src="~/Scripts/Application/Domain/Home/homeAPIService.js"></script>
+<script src="~/Scripts/Application/Domain/New/newAPIService.js"></script>
+<script src="~/Scripts/Application/Domain/New/Search/searchApp.js"></script>
+
+<div ng-app="searchApp" ng-controller="searchController as $ctrl"  ng-init="inita('@ViewBag.a')" ng-cloak>
+    <title>{{'TITLE' | translate}}</title>
+    <div class="news-list__page">
+        @Html.Action("Header", "General", new { area = "" })
+        <div class="container">
+            <div class="newsBreadCrump">
+                <ul>
+                    <li class="breadLi"><a href="/">{{'HOME' | translate}}</a></li>
+                    <li class="breadLi"><a href="">{{'NEWSANDCONTENT' | translate}}</a></li>
+                    <li class="breadLi active"><a href="/News">{{'NEWSS' | translate}}</a></li>
+                </ul>
+            </div>
+            <div class="news-list">
+
+                <div class="col-md-6 col-12 news-lis" ng-repeat="new in Newsdataviewtag">
+                    <div class="news-li">
+                        <div class="col-1 newsDate">
+                            <div class="newsDateBox">
+                                <span class="day">{{new.createDate| jalaliDate: "jDD" }}</span>
+                                <span class="month">{{new.createDate| jalaliDate: 'jMM' }}</span>
+                                <span class="year">{{new.createDate| jalaliDate: 'jYYYY' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-11 newsTxt">
+                            <div class="news-li__pic">
+                                <img ng-src="~/Gallerys/NewsGallery/{{new.fileName}}" alt="{{new.title}}" />
+                            </div>
+                            <div class="news-li__txtBox">
+                                <h2 class="news-li__title"><a href="/News/NewsContent{{UrlNewsContent.titleurl}}{{new.title}}{{UrlNewsContent.idurl}}{{new.newsID}}">{{new.title}}</a></h2>                                <p class="news-li__desc">{{new.shortDescription}}</p>
+                            </div>
+                            <div class="news-li__meta">
+                                <div class="col-3 li-meta li-meta__like"><em>{{new.like}}</em> <i class="fa fa-heart" aria-hidden="true"></i> </div>
+                                <div class="col-3 li-meta li-meta__cm"><em>{{new.commentCount}}</em><i class="fa fa-commenting-o" aria-hidden="true"></i> </div>
+                                <div class="col-3 li-meta li-meta__view"><em>{{new.seen}}</em><i class="fa fa-eye" aria-hidden="true"></i> </div>
+                                <div class="col-3 li-meta__rm"><a href="/News/NewsContent{{UrlNewsContent.titleurl}}{{new.title}}{{UrlNewsContent.idurl}}{{new.newsID}}">{{'MORE' | translate}}<i class="fa fa-angle-left" aria-hidden="true"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            @*<div class="news-list__pageinate">
+                <nav aria-label="Page navigation example">
+                    <div>
+                        <ul class="pagination-sm" uib-pagination total-items="PagedListInfo.totalCount"
+                            ng-model="PagedListInfo.pageIndex" ng-click="pageChanged(PagedListInfo.pageIndex)" max-size="maxSize" data-boundary-links="true"></ul>
+                        <p>تعداد صفحهات : {{ PagedListInfo.pageIndex }} از : {{ PagedListInfo.totalPages }}</p>
+                    </div>
+                </nav>
+            </div>*@
+        </div>
+        @Html.Action("Footer", "General", new { area = "" })
+    </div>
+</div>
