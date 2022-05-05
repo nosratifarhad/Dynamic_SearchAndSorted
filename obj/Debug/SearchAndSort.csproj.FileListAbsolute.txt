@@ -1,2 +1,0 @@
-C:\Users\farhad\Desktop\SearchAndSort\obj\Debug\SearchAndSort.csproj.CoreCompileInputs.cache
-C:\Users\farhad\Desktop\SearchAndSort\obj\Debug\SearchAndSort.csprojAssemblyReference.cache
