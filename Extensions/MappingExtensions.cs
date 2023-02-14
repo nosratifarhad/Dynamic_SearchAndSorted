@@ -1,6 +1,6 @@
-﻿using SearchAndSort.Core.Framework.Cmn;
+﻿using SearchAndSort.Core.Data;
+using SearchAndSort.Core.Framework.Cmn;
 using SearchAndSort.Core.Framework.Infrastructure.Mapper;
-using SearchAndSort.Core.Data;
 
 namespace SearchAndSort.Core.Extensions
 {
@@ -25,10 +25,12 @@ namespace SearchAndSort.Core.Extensions
 
         public static WeatherForecastDto ToBusinessObject(this WeatherForecast dbModel)
         {
-            //WeatherForecast weatherForecast = new WeatherForecast();
-            //weatherForecast.languageID = dbModel.LanguageID;
-            //weatherForecast.title = dbModel.title;
-            //return weatherForecast;
+            //FooterLink footerLink = new FooterLink();
+            //footerLink.footerLinkID = dbModel.FooterLinkID;
+            //footerLink.languageID = dbModel.LanguageID;
+            //footerLink.titleLink1 = dbModel.TitleLink1;
+            //footerLink.link1 = dbModel.Link1;
+            //return footerLink;
             return dbModel.MapTo<WeatherForecast, WeatherForecastDto>();
         }
 
@@ -42,10 +44,11 @@ namespace SearchAndSort.Core.Extensions
             List<WeatherForecastDto> businessObjectList = new List<WeatherForecastDto>();
 
             //foreach (var dbModel in dbModelList)
-            //    businessObjectList.Add(new WeatherForecast
+            //    businessObjectList.Add(new PostDomain
             //    {
+            //        footerLinkID = dbModel.FooterLinkID,
             //        languageID = dbModel.LanguageID,
-            //        title = dbModel.title,
+            //        titleLink1 = dbModel.TitleLink1,
             //    });
 
             foreach (var dbModel in dbModelList)

@@ -1,7 +1,9 @@
-namespace SearchAndSort.Core
+﻿namespace SearchAndSort.Core.Data
 {
-    public class WeatherForecast
+    public class WeatherForecastDto
     {
+        public int Id { get; set; }
+
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

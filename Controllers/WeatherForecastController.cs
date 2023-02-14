@@ -21,7 +21,7 @@ namespace SearchAndSort.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IPagedList<WeatherForecastDto>> GetSearchAndSortWeatherForecastAsync(EntityFilterTools.EntityFilterTermsAndSortParams entityFilterTermsAndSortParams)
+        public async Task<IPagedList<WeatherForecastDto>> GetAllProductByLanguageIdAsync(EntityFilterTools.EntityFilterTermsAndSortParams entityFilterTermsAndSortParams)
         {
             string strWhere = string.Empty;
             string strOrderBy = string.Empty;

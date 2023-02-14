@@ -7,8 +7,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Framework\Infrastructure\Infrustructure\**" />
+    <Content Remove="Framework\Infrastructure\Infrustructure\**" />
+    <EmbeddedResource Remove="Framework\Infrastructure\Infrustructure\**" />
+    <None Remove="Framework\Infrastructure\Infrustructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Framework\Cmn\EntityFilterTools\PredicateBuilder.cs" />
+    <Compile Remove="Framework\Cmn\EntityTools\DynamicLibrary.cs" />
+    <Compile Remove="Framework\Cmn\EntityTools\PredicateBuilder.cs" />
+    <Compile Remove="Framework\Infrastructure\AppDomainTypeFinder.cs" />
+    <Compile Remove="Framework\Infrastructure\ITypeFinder.cs" />
+    <Compile Remove="Framework\Infrastructure\Mapper\IMapperConfiguration.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="7.1.3" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 

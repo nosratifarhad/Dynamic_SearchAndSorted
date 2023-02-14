@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 
 namespace SearchAndSort.Core.Framework.Infrastructure.Mapper
 {
