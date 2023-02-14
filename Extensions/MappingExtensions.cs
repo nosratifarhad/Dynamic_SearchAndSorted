@@ -16,7 +16,7 @@ namespace SearchAndSort.Core.Extensions
             return AutoMapperConfiguration.Mapper.Map(source, destination);
         }
 
-        #region Tbl_News
+        #region WeatherForecastDto
 
         public static WeatherForecast ToDBModel(this WeatherForecastDto businessObject)
         {
@@ -25,12 +25,10 @@ namespace SearchAndSort.Core.Extensions
 
         public static WeatherForecastDto ToBusinessObject(this WeatherForecast dbModel)
         {
-            //FooterLink footerLink = new FooterLink();
-            //footerLink.footerLinkID = dbModel.FooterLinkID;
-            //footerLink.languageID = dbModel.LanguageID;
-            //footerLink.titleLink1 = dbModel.TitleLink1;
-            //footerLink.link1 = dbModel.Link1;
-            //return footerLink;
+            //WeatherForecastDto weatherForecast = new WeatherForecastDto();
+            //weatherForecast.Id = dbModel.Id;
+            //weatherForecast.Date= dbModel.Date;
+            //return weatherForecast;
             return dbModel.MapTo<WeatherForecast, WeatherForecastDto>();
         }
 
@@ -44,11 +42,10 @@ namespace SearchAndSort.Core.Extensions
             List<WeatherForecastDto> businessObjectList = new List<WeatherForecastDto>();
 
             //foreach (var dbModel in dbModelList)
-            //    businessObjectList.Add(new PostDomain
+            //    businessObjectList.Add(new WeatherForecastDto
             //    {
-            //        footerLinkID = dbModel.FooterLinkID,
-            //        languageID = dbModel.LanguageID,
-            //        titleLink1 = dbModel.TitleLink1,
+            //        Id = dbModel.Id,
+            //        Date = dbModel.Date
             //    });
 
             foreach (var dbModel in dbModelList)
