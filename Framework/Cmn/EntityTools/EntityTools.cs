@@ -84,6 +84,20 @@ namespace SearchAndSort.Core.Framework.Cmn.EntityTools
             //    var list = CustomerDataSource.customerData.AsQueryable().OrderByPropertyName("PropertyName", true).ToList();
             //}
         }
+
+        public static string OrderByPropertyName(this string SortField, int SortDir, bool isFirstSortParam)
+        {
+            StringBuilder sortString = new StringBuilder();
+
+            string sortDirtring = SortDir == 0 ? "Asc" : "Desc";
+
+            if (!isFirstSortParam)
+                sortString.Append(",");
+
+            sortString.Append($" {SortField} {sortDirtring}");
+
+            return sortString.ToString();
+        }
     }
 
 }

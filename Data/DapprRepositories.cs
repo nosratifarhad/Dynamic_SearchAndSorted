@@ -1,4 +1,5 @@
 ﻿using SearchAndSort.Core.Framework.Cmn.EntityFilterTools;
+using SearchAndSort.Core.Framework.Cmn.EntityTools;
 using System.Text;
 
 namespace SearchAndSort.Core.Data
@@ -7,8 +8,8 @@ namespace SearchAndSort.Core.Data
     {
         public async Task<IEnumerable<WeatherForecast>> GetAllWeatherForecast(EntityFilterTools.EntityFilterTermsAndSortParams entityFilterTermsAndSortParams)
         {
+            StringBuilder strQuery = new StringBuilder();
             StringBuilder strWhere = new StringBuilder();
-            StringBuilder strOrderBy = new StringBuilder();
 
             foreach (var filterTerm in entityFilterTermsAndSortParams.EntityFilterTermList)
                 if (!string.IsNullOrEmpty(filterTerm.SearchTerm))
@@ -25,43 +26,37 @@ namespace SearchAndSort.Core.Data
                 }
 
             var query = GetSearchAndSortWithDapprQuery();
+            strQuery.Append(query);
 
             if (strWhere.Length != 0)
-                query += EntityFilterTools.WHERE + strWhere;
+                strQuery.Append(EntityFilterTools.WHERE + strWhere);
+
+            bool isFirstSortParam = true;
 
             if (entityFilterTermsAndSortParams.EntitySortParamList.Count() == 0)
                 entityFilterTermsAndSortParams.EntitySortParamList.Add(
-                    new EntityFilterTools.EntitySortParam("Id", EntityFilterTools.SortDir.Desc));
+            new EntityFilterTools.EntitySortParam("Id", EntityFilterTools.SortDir.Desc));
 
             StringBuilder sortBuilder = new StringBuilder();
+            sortBuilder.Append(EntityFilterTools.ORDERBY);
+
             foreach (var entitySortParam in entityFilterTermsAndSortParams.EntitySortParamList)
             {
-                sortBuilder.Append(OrderByPropertyName(entitySortParam.SortField, (int)entitySortParam.SortDir));
+                sortBuilder.Append(EntityTools.OrderByPropertyName(entitySortParam.SortField, (int)entitySortParam.SortDir, isFirstSortParam));
+
+                isFirstSortParam = false;
             }
 
-            query += sortBuilder.ToString();
+            strQuery.AppendLine(sortBuilder.ToString());
 
-            //var result = await _dbSession.Connection.QueryAsync<CompanyDto>(query);
+            //var result = await _dbSession.Connection.QueryAsync<WeatherForecast>(strQuery.ToString()).ConfigureAwait(false);
             var result = new List<WeatherForecast>();
 
             return (IEnumerable<WeatherForecast>)result;
         }
 
-        public string OrderByPropertyName(string SortField, int SortDir)
-        {
-            string sortDirtring = SortDir == 0 ? "Asc" : "Desc";
-
-            string sortString = $"Order By {SortField} {sortDirtring}";
-            //if (!firstSortField)
-            //    method = Ascending ? "ThenBy" : "ThenByDescending";
-
-            return sortString;
-        }
-
         private string GetSearchAndSortWithDapprQuery()
-        {
-            return "select ";
-        }
+            => "SELECT * FROM WeatherForecast";
 
     }
 }
