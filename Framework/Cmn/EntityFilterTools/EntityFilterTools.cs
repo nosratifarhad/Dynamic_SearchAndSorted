@@ -10,6 +10,8 @@ namespace SearchAndSort.Core.Framework.Cmn.EntityFilterTools
 {
     public class EntityFilterTools
     {
+        public const string WHERE = " WHERE ";
+
         public enum SearchFilterOps
         {
             Equal = 0,
@@ -37,9 +39,9 @@ namespace SearchAndSort.Core.Framework.Cmn.EntityFilterTools
             Desc = 1,
         }
 
-        public static string GetSearchFilterTermWhereClause<T>(EntityFilterTools.EntityFilterTerm filterTerm)
+        public static string GetSearchFilterTermWhereClauseWithEntityFrameWork<T>(EntityFilterTools.EntityFilterTerm filterTerm)
         {
-            string strWhere = string.Empty;
+            StringBuilder strWhere = new StringBuilder();
 
             PropertyInfo propertyInfo = EntityTools.EntityTools.GetClassParameter<T>(filterTerm.SearchTerm);
 
@@ -54,42 +56,98 @@ namespace SearchAndSort.Core.Framework.Cmn.EntityFilterTools
                 {
                     case EntityFilterTools.SearchFilterOps.Equal:
                         if (propertyType == typeof(String))
-                            strWhere += filterTerm.SearchTerm + ".Equals(" + filterTerm.SearchValue + ")";
+                            strWhere.Append(filterTerm.SearchTerm + ".Equals(" + filterTerm.SearchValue + ")");
                         else
-                            strWhere += filterTerm.SearchTerm + " = " + filterTerm.SearchValue;
+                            strWhere.Append(filterTerm.SearchTerm + " = " + filterTerm.SearchValue);
                         break;
                     case EntityFilterTools.SearchFilterOps.NotEqual:
-                        strWhere += filterTerm.SearchTerm + " <> " + filterTerm.SearchValue;
+                        strWhere.Append(filterTerm.SearchTerm + " <> " + filterTerm.SearchValue);
                         break;
                     case EntityFilterTools.SearchFilterOps.Contains:
-                        strWhere += filterTerm.SearchTerm + ".Contains(" + filterTerm.SearchValue + ")";
+                        strWhere.Append(filterTerm.SearchTerm + ".Contains(" + filterTerm.SearchValue + ")");
                         break;
                     case EntityFilterTools.SearchFilterOps.NotContains:
-                        strWhere += "!" + filterTerm.SearchTerm + ".Contains(" + filterTerm.SearchValue + ")";
+                        strWhere.Append("!" + filterTerm.SearchTerm + ".Contains(" + filterTerm.SearchValue + ")");
                         break;
                     case EntityFilterTools.SearchFilterOps.StartsWith:
-                        strWhere += filterTerm.SearchTerm + ".StartsWith(" + filterTerm.SearchValue + ")";
+                        strWhere.Append(filterTerm.SearchTerm + ".StartsWith(" + filterTerm.SearchValue + ")");
                         break;
                     case EntityFilterTools.SearchFilterOps.EndsWith:
-                        strWhere += filterTerm.SearchTerm + ".StartsWith(" + filterTerm.SearchValue + ")";
+                        strWhere.Append(filterTerm.SearchTerm + ".StartsWith(" + filterTerm.SearchValue + ")");
                         break;
                     case EntityFilterTools.SearchFilterOps.GreaterThan:
-                        strWhere += filterTerm.SearchTerm + " > " + filterTerm.SearchValue;
+                        strWhere.Append(filterTerm.SearchTerm + " > " + filterTerm.SearchValue);
                         break;
                     case EntityFilterTools.SearchFilterOps.GreaterThanEqual:
-                        strWhere += filterTerm.SearchTerm + " >= " + filterTerm.SearchValue;
+                        strWhere.Append(filterTerm.SearchTerm + " >= " + filterTerm.SearchValue);
                         break;
                     case EntityFilterTools.SearchFilterOps.LessThan:
-                        strWhere += filterTerm.SearchTerm + " < " + filterTerm.SearchValue;
+                        strWhere.Append(filterTerm.SearchTerm + " < " + filterTerm.SearchValue);
                         break;
                     case EntityFilterTools.SearchFilterOps.LessThanEqual:
-                        strWhere += filterTerm.SearchTerm + " <= " + filterTerm.SearchValue;
+                        strWhere.Append(filterTerm.SearchTerm + " <= " + filterTerm.SearchValue);
                         break;
                 }
 
-                return strWhere;
+                return strWhere.ToString();
             }
 
+            return "";
+        }
+
+        public static string GetSearchFilterTermWhereClauseWithDappr<T>(EntityFilterTools.EntityFilterTerm filterTerm)
+        {
+            StringBuilder strWhere = new StringBuilder();
+
+            PropertyInfo propertyInfo = EntityTools.EntityTools.GetClassParameter<T>(filterTerm.SearchTerm);
+
+            if (propertyInfo != null)
+            {
+                Type propertyType = propertyInfo.PropertyType;
+
+                if (propertyType == typeof(String))
+                    filterTerm.SearchValue = "\'" + filterTerm.SearchValue + "\'";
+
+                switch (filterTerm.SearchFilterOp)
+                {
+                    case EntityFilterTools.SearchFilterOps.Equal:
+                        if (propertyType == typeof(String))
+                            strWhere.Append($"{filterTerm.SearchTerm} LIKE ({filterTerm.SearchValue})");
+                        else
+                            strWhere.Append($"{filterTerm.SearchTerm} = {filterTerm.SearchValue}");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.NotEqual:
+                        strWhere.Append($"{filterTerm.SearchTerm} <> {filterTerm.SearchValue}");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.Contains:
+                        strWhere.Append($"{filterTerm.SearchTerm} IN {filterTerm.SearchValue}");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.NotContains:
+                        strWhere.Append($"{filterTerm.SearchTerm} NOT IN {filterTerm.SearchValue}");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.StartsWith:
+                        strWhere.Append($"{filterTerm.SearchTerm} LIKE {filterTerm.SearchValue}%");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.EndsWith:
+                        strWhere.Append($"{filterTerm.SearchTerm} LIKE %{filterTerm.SearchValue}");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.GreaterThan:
+                        strWhere.Append($"{filterTerm.SearchTerm} > {filterTerm.SearchValue}");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.GreaterThanEqual:
+                        strWhere.Append($"{filterTerm.SearchTerm} >= {filterTerm.SearchValue}");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.LessThan:
+                        strWhere.Append($"{filterTerm.SearchTerm} < {filterTerm.SearchValue}");
+                        break;
+                    case EntityFilterTools.SearchFilterOps.LessThanEqual:
+                        strWhere.Append($"{filterTerm.SearchTerm} <= {filterTerm.SearchValue}");
+
+                        break;
+                }
+
+                return strWhere.ToString();
+            }
             return "";
         }
 

@@ -81,6 +81,21 @@ namespace SearchAndSort.Core.Framework.Cmn
             this.DataList.AddRange(source);
         }
 
+        public PagedList(IEnumerable<T> source, int pageIndex, int pageSize)
+        {
+            DataList = new List<T>();
+
+            TotalCount = source.Count();
+            TotalPages = TotalCount / pageSize;
+
+            if (TotalCount % pageSize > 0)
+                TotalPages++;
+
+            this.PageSize = pageSize;
+            this.PageIndex = pageIndex;
+            this.DataList.AddRange(source);
+        }
+
         //public int PageIndex { get; private set; }
         //public int PageSize { get; private set; }
         //public int TotalCount { get; private set; }

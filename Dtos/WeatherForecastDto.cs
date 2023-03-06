@@ -1,4 +1,4 @@
-﻿namespace SearchAndSort.Core.Data
+﻿namespace SearchAndSort.Core.Dtos
 {
     public class WeatherForecastDto
     {

@@ -1,4 +1,5 @@
 ﻿using SearchAndSort.Core.Data;
+using SearchAndSort.Core.Dtos;
 using SearchAndSort.Core.Framework.Cmn;
 using SearchAndSort.Core.Framework.Infrastructure.Mapper;
 
@@ -25,10 +26,6 @@ namespace SearchAndSort.Core.Extensions
 
         public static WeatherForecastDto ToBusinessObject(this WeatherForecast dbModel)
         {
-            //WeatherForecastDto weatherForecast = new WeatherForecastDto();
-            //weatherForecast.Id = dbModel.Id;
-            //weatherForecast.Date= dbModel.Date;
-            //return weatherForecast;
             return dbModel.MapTo<WeatherForecast, WeatherForecastDto>();
         }
 
@@ -40,13 +37,6 @@ namespace SearchAndSort.Core.Extensions
         public static IEnumerable<WeatherForecastDto> ToBusinessObjectList(this IEnumerable<WeatherForecast> dbModelList)
         {
             List<WeatherForecastDto> businessObjectList = new List<WeatherForecastDto>();
-
-            //foreach (var dbModel in dbModelList)
-            //    businessObjectList.Add(new WeatherForecastDto
-            //    {
-            //        Id = dbModel.Id,
-            //        Date = dbModel.Date
-            //    });
 
             foreach (var dbModel in dbModelList)
                 businessObjectList.Add(dbModel.MapTo<WeatherForecast, WeatherForecastDto>());
