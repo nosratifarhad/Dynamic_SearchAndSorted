@@ -36,7 +36,7 @@ namespace SearchAndSort.Core.Data
             StringBuilder sortBuilder = new StringBuilder();
             foreach (var entitySortParam in entityFilterTermsAndSortParams.EntitySortParamList)
             {
-                sortBuilder.Append(OrderByPropertyName(query, entitySortParam.SortField, entitySortParam.SortDir == EntityFilterTools.SortDir.Asc));
+                sortBuilder.Append(OrderByPropertyName(entitySortParam.SortField, (int)entitySortParam.SortDir));
             }
 
             query += sortBuilder.ToString();
@@ -47,13 +47,15 @@ namespace SearchAndSort.Core.Data
             return (IEnumerable<WeatherForecast>)result;
         }
 
-        public string OrderByPropertyName(string q, string SortField, bool Ascending)
+        public string OrderByPropertyName(string SortField, int SortDir)
         {
-            string method = Ascending ? "OrderBy" : "OrderByDescending";
+            string sortDirtring = SortDir == 0 ? "Asc" : "Desc";
+
+            string sortString = $"Order By {SortField} {sortDirtring}";
             //if (!firstSortField)
             //    method = Ascending ? "ThenBy" : "ThenByDescending";
 
-            return method;
+            return sortString;
         }
 
         private string GetSearchAndSortWithDapprQuery()
