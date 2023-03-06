@@ -7,3 +7,4 @@ this giving entity :
 
 your can use this enums for up entity:
 
+![FIR](https://user-images.githubusercontent.com/45731341/223094807-b829ea46-9434-4790-bb56-108a7d2cbc1b.png)
