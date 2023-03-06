@@ -1,6 +1,5 @@
 using SearchAndSort.Core.Framework.Cmn;
 using SearchAndSort.Core.Framework.Cmn.EntityFilterTools;
-using SearchAndSort.Core.Framework.Cmn.EntityTools;
 using SearchAndSort.Core.Data;
 using SearchAndSort.Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +15,12 @@ namespace SearchAndSort.Core.Controllers
         [HttpPost]
         public async Task<IPagedList<WeatherForecastDto>> SearchAndSortWithEntityFrameWorkAsync(EntityFilterTools.EntityFilterTermsAndSortParams entityFilterTermsAndSortParams)
         {
-            EFRepositories eFRepositories = new EFRepositories();
+            EFRepositories eFRepositories = new EFRepositories();//it's not 
             
-            var query = await eFRepositories.GetAllWeatherForecast(entityFilterTermsAndSortParams);
+            var queryableWeatherForecast = await eFRepositories.GetAllWeatherForecast(entityFilterTermsAndSortParams);
 
             return
-                new PagedList<WeatherForecast>(query, entityFilterTermsAndSortParams.PageIndex, entityFilterTermsAndSortParams.PageSize)
+                new PagedList<WeatherForecast>(queryableWeatherForecast, entityFilterTermsAndSortParams.PageIndex, entityFilterTermsAndSortParams.PageSize)
                 .ToBusinessObjectPagedList();
 
         }
@@ -29,7 +28,7 @@ namespace SearchAndSort.Core.Controllers
         [HttpPost]
         public async Task<IPagedList<WeatherForecastDto>> SearchAndSortWithDapprAsync(EntityFilterTools.EntityFilterTermsAndSortParams entityFilterTermsAndSortParams)
         {
-            DapprRepositories dapprRepositories = new DapprRepositories();
+            DapprRepositories dapprRepositories = new DapprRepositories();//it's not
 
             var weatherForecastDtoList = await dapprRepositories.GetAllWeatherForecast(entityFilterTermsAndSortParams);
 
