@@ -9,9 +9,9 @@
     "pageSize": 0,
     "entityFilterTermList": [
       {
-        "searchTerm": "string",
-        "searchValue": "string",
-        "searchFilterOp": 0,
+        "searchTerm": "string", //you can set property name like 'productName' or nameof(productName) .
+        "searchValue": "string", //you can set property value like 'laptop lenovo ideapad 3' .
+        "searchFilterOp": 0, //you can use 'SearchFilterOps' enum for set .
         "logicalOp": 0
       }
     ],
@@ -24,9 +24,33 @@
   }
 }
 ```
+
+
+``` csharp
+public enum SearchFilterOps
+{
+    Equal = 0,
+    LessThan = 1,
+    GreaterThan = 2,
+    LessThanEqual = 3,
+    GreaterThanEqual = 4,
+    NotEqual = 5,
+    Contains = 6,
+    NotContains = 7,
+    StartsWith = 8,
+    EndsWith = 9,
+}
+```
+
+
+
+
+
+
 ![FIL](https://user-images.githubusercontent.com/45731341/223094619-df869664-d6ff-4ddd-a550-f0715a10a5f7.png)
 
 
 ## You can use the following enums to initialize the above object. It is completely readable :
 
 ![FIR](https://user-images.githubusercontent.com/45731341/223094807-b829ea46-9434-4790-bb56-108a7d2cbc1b.png)
+
