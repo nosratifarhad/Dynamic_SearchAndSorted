@@ -1,6 +1,30 @@
 # SearchAndSorted
 
-## This is an object that API for search and sort and paging get :
+## This is Csharp object that API for search and sort and paging get :
+
+```csharp
+public class EntityFilterTermsAndSortParams
+{
+    public int PageIndex { get; set; }
+    public int PageSize { get; set; }
+
+    public List<EntityFilterTerm> EntityFilterTermList;
+
+    public List<EntitySortParam> EntitySortParamList;
+
+    public EntityFilterTermsAndSortParams(List<EntityFilterTerm> entityFilterTermList,
+        List<EntitySortParam> entitySortParamList, int pageIndex, int pageSize)
+    {
+
+        EntityFilterTermList = entityFilterTermList;
+        EntitySortParamList = entitySortParamList;
+        PageIndex = pageIndex;
+        PageSize = pageSize;
+    }
+}
+```
+
+## This is json object that API for search and sort and paging get :
 
 ```json
 {
@@ -26,7 +50,6 @@
   }
 }
 ```
-
 
 ``` csharp
 public enum SearchFilterOps
