@@ -11,7 +11,7 @@
       {
         "searchTerm": "string", //you can set property name like 'productName' or nameof(productName) .
         "searchValue": "string", //you can set property value like 'laptop lenovo ideapad 3' .
-        "searchFilterOp": 0, //if you have filter , you must set this param for use in query dataBase
+        "searchFilterOp": 0, //if you have filter , you must set this param for use in query dataBase and your can use 'LogicalOps' enum for set .
         "logicalOp": 0 //if you have one more filter , you need to set this param and your can use 'SearchFilterOps' enum for set .
       }
     ],
@@ -39,6 +39,13 @@ public enum SearchFilterOps
     NotContains = 7,
     StartsWith = 8,
     EndsWith = 9,
+}
+
+public enum LogicalOps
+{
+    And = 0,
+    Or = 1,
+    Not = 2,
 }
 ```
 
