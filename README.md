@@ -1,10 +1,10 @@
 # SearchAndSorted
 
-this giving entity :
+## This is an object that API for search and sort and paging get :
 
 ![FIL](https://user-images.githubusercontent.com/45731341/223094619-df869664-d6ff-4ddd-a550-f0715a10a5f7.png)
 
 
-your can use this enums for up entity:
+## You can use the following enums to initialize the above object. It is completely readable :
 
 ![FIR](https://user-images.githubusercontent.com/45731341/223094807-b829ea46-9434-4790-bb56-108a7d2cbc1b.png)
