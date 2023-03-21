@@ -42,8 +42,8 @@ public class EntityFilterTermsAndSortParams
     ],
     "entitySortParamList": [
       {
-        "sortField": "string",
-        "sortDir": 0
+        "sortField": "string", //you can set property name like 'Id' or nameof(Id) .
+        "sortDir": 0 //if you have sort param , you must set this param for use in query dataBase and your can use 'SortDir' enum for set .
       },
       // ...
     ]
@@ -52,6 +52,7 @@ public class EntityFilterTermsAndSortParams
 ```
 
 ``` csharp
+//Filter Param
 public enum SearchFilterOps
 {
     Equal = 0,
@@ -66,23 +67,19 @@ public enum SearchFilterOps
     EndsWith = 9,
 }
 
+//Filter Param
 public enum LogicalOps
 {
     And = 0,
     Or = 1,
     Not = 2,
 }
+
+//Sort Param
+public enum SortDir
+{
+    Asc = 0,
+    Desc = 1,
+}
+
 ```
-
-
-
-
-
-
-![FIL](https://user-images.githubusercontent.com/45731341/223094619-df869664-d6ff-4ddd-a550-f0715a10a5f7.png)
-
-
-## You can use the following enums to initialize the above object. It is completely readable :
-
-![FIR](https://user-images.githubusercontent.com/45731341/223094807-b829ea46-9434-4790-bb56-108a7d2cbc1b.png)
-
