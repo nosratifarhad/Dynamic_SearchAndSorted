@@ -11,7 +11,7 @@
       {
         "searchTerm": "string", //you can set property name like 'productName' or nameof(productName) .
         "searchValue": "string", //you can set property value like 'laptop lenovo ideapad 3' .
-        "searchFilterOp": 0, //you can use 'SearchFilterOps' enum for set .
+        "searchFilterOp": 0, //if you have one more filter , you need to set this param and your can use 'SearchFilterOps' enum for set .
         "logicalOp": 0
       }
     ],
