@@ -8,24 +8,23 @@ using SearchAndSort.Core.Dtos;
 namespace SearchAndSort.Core.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
 
-        //[HttpPost]
-        //public async Task<IPagedList<WeatherForecastDto>> SearchAndSortWithEntityFrameWorkAsync(EntityFilterTools.EntityFilterTermsAndSortParams entityFilterTermsAndSortParams)
-        //{
-        //    EFRepositories eFRepositories = new EFRepositories();//it's not 
+        [HttpPost("api/WeatherForecast/SearchAndSortWithEntityFrameWorkAsync")]
+        public async Task<IPagedList<WeatherForecastDto>> SearchAndSortWithEntityFrameWorkAsync(EntityFilterTools.EntityFilterTermsAndSortParams entityFilterTermsAndSortParams)
+        {
+            EFRepositories eFRepositories = new EFRepositories();//it's not 
             
-        //    var queryableWeatherForecast = await eFRepositories.GetAllWeatherForecast(entityFilterTermsAndSortParams);
+            var queryableWeatherForecast = await eFRepositories.GetAllWeatherForecast(entityFilterTermsAndSortParams);
 
-        //    return
-        //        new PagedList<WeatherForecast>(queryableWeatherForecast, entityFilterTermsAndSortParams.PageIndex, entityFilterTermsAndSortParams.PageSize)
-        //        .ToBusinessObjectPagedList();
+            return
+                new PagedList<WeatherForecast>(queryableWeatherForecast, entityFilterTermsAndSortParams.PageIndex, entityFilterTermsAndSortParams.PageSize)
+                .ToBusinessObjectPagedList();
 
-        //}
+        }
 
-        [HttpPost]
+        [HttpPost("api/WeatherForecast/SearchAndSortWithDapprAsync")]
         public async Task<IPagedList<WeatherForecastDto>> SearchAndSortWithDapprAsync(EntityFilterTools.EntityFilterTermsAndSortParams entityFilterTermsAndSortParams)
         {
             DapprRepositories dapprRepositories = new DapprRepositories();//it's not
